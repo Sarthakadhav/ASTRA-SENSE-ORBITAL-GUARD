@@ -145,3 +145,4 @@ The repository is fully verified and prepared for single-service deployment to R
 - **Zero Configuration Ambiguity:** Dockerfile and `railway.json` provide deterministic, automated container building and health probing.
 - **Storage Permanence:** Strict `/data` persistent volume detection ensures zero risk of SQLite data loss across container lifecycles.
 - **Security Hardened:** All secrets are externalized to environment variables; all API endpoints enforce strict JSON responses and role validation.
+

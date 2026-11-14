@@ -88,3 +88,4 @@ ASTRA-SENSE-ORBITAL-GUARD/
 4. **Autonomous Sync Worker in `lifespan`:** Start background loop in FastAPI `lifespan` with graceful shutdown signal handling.
 5. **Railway Configuration (`railway.json`):** Single-replica container, health check at `/health`, volume mount at `/data`.
 6. **Testing & Validation:** Execute full test battery, build container locally or test runtime paths, and produce deployment guide.
+
