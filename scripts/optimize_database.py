@@ -34,3 +34,4 @@ def optimize_local_db():
 
 if __name__ == "__main__":
     optimize_local_db()
+

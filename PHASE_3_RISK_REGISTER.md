@@ -31,3 +31,4 @@ Risks are categorized across Likelihood (L1-L5) and Impact (I1-I5) to establish 
    Records failing after `max_retries` transition to `DEAD_LETTER` status. The outbox processor continues servicing healthy records, preventing a single malformed payload from stalling the queue.
 3. **Emergency Database Rollback:**
    Physical SQLite snapshots are captured before destructive operations. In case of local database corruption, the pre-migration backup (`backend/backups/orbital_guard_pre_migration_*.db`) is restored.
+

@@ -119,3 +119,4 @@ npm run preview -- --port 5173
 - In the event of local database failure, restore from the physical pre-migration backup located at:
   `backend/backups/orbital_guard_pre_migration_*.db`.
 - The local operational database is fully autonomous: if Supabase becomes unreachable, local flight monitoring, telemetry, inventory dispensations, and alerts continue with 100% functionality.
+

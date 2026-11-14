@@ -99,3 +99,4 @@ Phase 3 delivers a hardened, production-ready, mission-critical flight medical o
 2. **Cloud Asynchrony:** Supabase PostgreSQL acts strictly as an asynchronous replication, archival, and ground support store.
 3. **Pure Software Guarantee:** Zero physical hardware, ESP32, Arduino, or serial requirements.
 4. **Secret Isolation:** Modern secret keys (`sb_secret_...`) and credentials remain strictly isolated in `backend/.env`.
+
