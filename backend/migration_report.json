@@ -1,8 +1,8 @@
 {
-  "backup_created": "D:\\ASTRA-SENSE-ORBITAL-GUARD\\backend\\backups\\orbital_guard_pre_migration_20261114_145729.db",
+  "backup_created": "D:\\ASTRA-SENSE-ORBITAL-GUARD\\backend\\backups\\orbital_guard_pre_migration_20261114_182733.db",
   "source_database": "D:\\ASTRA-SENSE-ORBITAL-GUARD\\backend\\orbital_guard.db",
   "tables_evaluated": 8,
-  "total_source_records": 381,
+  "total_source_records": 460,
   "validation_errors_count": 0,
   "results_by_table": {
     "astronauts": {
@@ -13,7 +13,7 @@
       "skipped": 0
     },
     "medical_inventory": {
-      "records_validated": 20,
+      "records_validated": 23,
       "status": "PREVIEW_READY",
       "uploaded": 0,
       "failed": 0,
@@ -34,28 +34,28 @@
       "skipped": 0
     },
     "incidents": {
-      "records_validated": 56,
+      "records_validated": 66,
       "status": "PREVIEW_READY",
       "uploaded": 0,
       "failed": 0,
       "skipped": 0
     },
     "inventory_dispensations": {
-      "records_validated": 31,
+      "records_validated": 38,
       "status": "PREVIEW_READY",
       "uploaded": 0,
       "failed": 0,
       "skipped": 0
     },
     "telemetry_history": {
-      "records_validated": 137,
+      "records_validated": 169,
       "status": "PREVIEW_READY",
       "uploaded": 0,
       "failed": 0,
       "skipped": 0
     },
     "audit_logs": {
-      "records_validated": 127,
+      "records_validated": 154,
       "status": "PREVIEW_READY",
       "uploaded": 0,
       "failed": 0,
@@ -63,5 +63,5 @@
     }
   },
   "mode": "PREVIEW",
-  "timestamp": "2026-11-14T14:57:29.423291"
+  "timestamp": "2026-11-14T18:27:33.495693"
 }

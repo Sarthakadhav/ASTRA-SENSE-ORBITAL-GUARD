@@ -5,9 +5,14 @@ from contextlib import contextmanager
 from app.config import settings
 
 def get_db_path() -> Path:
-    if os.getenv("VERCEL") or os.getenv("VERCEL_ENV"):
-        return Path("/tmp/orbital_guard.db")
-    return settings.DATABASE_PATH
+    p = settings.DATABASE_PATH
+    if not p.parent.exists():
+        try:
+            p.parent.mkdir(parents=True, exist_ok=True)
+        except Exception as e:
+            if settings.ENVIRONMENT in ("production", "railway"):
+                raise RuntimeError(f"CRITICAL: Failed to create database directory {p.parent}: {e}")
+    return p
 
 @contextmanager
 def get_db():

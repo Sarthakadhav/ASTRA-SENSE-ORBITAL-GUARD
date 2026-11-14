@@ -19,8 +19,58 @@ class Settings:
     PORT: int = int(os.getenv("PORT", "8000"))
     DEBUG: bool = os.getenv("DEBUG", "True").lower() in ("true", "1", "yes")
 
-    # Local SQLite flight storage (primary offline-first engine)
-    DATABASE_PATH: Path = BASE_DIR / "orbital_guard.db"
+    # Database configuration & path resolution
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "")
+
+    @property
+    def DATABASE_PATH(self) -> Path:
+        # 1. Explicit DATABASE_URL handling (supports sqlite:////data/... or sqlite:///./...)
+        if self.DATABASE_URL:
+            raw = self.DATABASE_URL
+            if raw.startswith("sqlite:////"):
+                return Path("/" + raw[len("sqlite:////"):])
+            elif raw.startswith("sqlite:///"):
+                path_part = raw[len("sqlite:///"):]
+                p = Path(path_part)
+                if not p.is_absolute():
+                    p = (BASE_DIR / path_part).resolve()
+                return p
+            elif raw.startswith("sqlite://"):
+                path_part = raw[len("sqlite://"):]
+                p = Path(path_part)
+                if not p.is_absolute():
+                    p = (BASE_DIR / path_part).resolve()
+                return p
+
+        # 2. Railway persistent volume auto-detection (/data mount)
+        data_dir = Path("/data")
+        if data_dir.exists() and os.access(data_dir, os.W_OK):
+            return data_dir / "orbital_guard.db"
+
+        # 3. Fail clearly if production environment requires persistent volume but it is missing
+        if self.ENVIRONMENT in ("production", "railway") and os.getenv("RAILWAY_ENVIRONMENT"):
+            if not data_dir.exists() or not os.access(data_dir, os.W_OK):
+                raise RuntimeError("CRITICAL: Production Railway volume /data is missing or non-writable! Ephemeral fallback forbidden.")
+            return data_dir / "orbital_guard.db"
+
+        # 4. Local flight default
+        return BASE_DIR / "orbital_guard.db"
+
+    @property
+    def STATIC_DIR(self) -> Path:
+        custom = os.getenv("STATIC_DIR")
+        if custom and Path(custom).exists():
+            return Path(custom)
+        candidates = [
+            BASE_DIR.parent / "dist",     # Root dist/ directory
+            Path("/app/dist"),            # Docker container dist
+            Path("/app/static"),          # Docker container static
+            BASE_DIR / "static"           # Backend static directory
+        ]
+        for c in candidates:
+            if c.exists() and (c / "index.html").exists():
+                return c
+        return BASE_DIR.parent / "dist"
 
     # AI Intelligence keys (optional cloud enhancement)
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")

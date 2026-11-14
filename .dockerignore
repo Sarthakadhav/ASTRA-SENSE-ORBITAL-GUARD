@@ -1,0 +1,50 @@
+# ==============================================================================
+# ASTRA SENSE – ORBITAL GUARD .dockerignore
+# ==============================================================================
+
+# Git & CI/CD
+.git
+.github
+.gitignore
+
+# Environment & Credentials (NEVER bake secrets into image)
+.env
+.env.*
+*.env
+backend/.env
+backend/.env.*
+
+# Local SQLite databases (volume-mounted persistent store at runtime)
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+backend/orbital_guard.db*
+backend/backups/
+orbital_guard_*.db*
+
+# Node dependencies & local builds
+node_modules/
+dist/
+.npm
+
+# Python cache & test artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+backend/tests/
+scripts/
+
+# Documentation & Audit reports (kept in repo, not needed in production image)
+*.md
+
+# Editor & OS artifacts
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
