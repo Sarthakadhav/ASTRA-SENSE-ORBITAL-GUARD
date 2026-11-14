@@ -1,9 +1,12 @@
+import os
 import sqlite3
 from pathlib import Path
 from contextlib import contextmanager
 from app.config import settings
 
 def get_db_path() -> Path:
+    if os.getenv("VERCEL") or os.getenv("VERCEL_ENV"):
+        return Path("/tmp/orbital_guard.db")
     return settings.DATABASE_PATH
 
 @contextmanager
