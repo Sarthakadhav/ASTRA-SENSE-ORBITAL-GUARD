@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-11-13T14:33:38.646625",
+  "backup_file": "D:\\ASTRA-SENSE-ORBITAL-GUARD\\backend\\backups\\orbital_guard_phase_2_5_20261113_143338.db",
+  "backup_size_bytes": 389120,
+  "live_integrity": "ok",
+  "backup_integrity": "ok",
+  "journal_mode": "wal",
+  "total_operational_records": 303,
+  "operational_counts": {
+    "astronauts": 4,
+    "medical_inventory": 18,
+    "recovery_timelines": 2,
+    "health_alerts": 4,
+    "incidents": 44,
+    "inventory_dispensations": 24,
+    "telemetry_history": 109,
+    "audit_logs": 98
+  },
+  "infrastructure_counts": {
+    "cloud_sync_outbox": 296,
+    "cloud_sync_conflicts": 1
+  },
+  "outbox_status_distribution": {
+    "PENDING": 190,
+    "RETRY": 1,
+    "SYNCED": 105
+  },
+  "conflict_distribution": {
+    "RESOLVED_LOCAL": 1
+  },
+  "validation_report": {
+    "eligible_rows": 303,
+    "invalid_json_rows": 0,
+    "missing_fk_rows": 0
+  }
+}

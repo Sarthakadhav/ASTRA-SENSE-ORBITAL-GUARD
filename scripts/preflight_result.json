@@ -1,0 +1,135 @@
+{
+  "credentials": {
+    "url_configured": true,
+    "url_domain": "kgjbltqunjpscyipwgll.supabase.co",
+    "url_https": true,
+    "secret_key_configured": true,
+    "secret_key_length": 41,
+    "secret_key_format": "MODERN_OPAQUE (sb_secret_...)",
+    "publishable_key_configured": true,
+    "publishable_key_format": "MODERN_OPAQUE (sb_publishable_...)",
+    "jwks_url_configured": true,
+    "is_configured": true
+  },
+  "connectivity": {
+    "jwks_endpoint_probe": {
+      "reachable": true,
+      "status_code": 200,
+      "keys_count": 1
+    },
+    "gateway_probe": {
+      "reachable": true,
+      "status_code": 401,
+      "message": "Gateway active and responding"
+    },
+    "client_manager_status": {
+      "connected": true,
+      "configured": true,
+      "status": "ONLINE",
+      "status_code": 200,
+      "message": "Supabase cloud database connected"
+    }
+  },
+  "headers_verification": {
+    "apikey_header_present": true,
+    "authorization_header_present": false,
+    "opaque_key_correctly_omits_bearer": true,
+    "content_type_json": true
+  },
+  "schema_inspection": {
+    "tables": {
+      "astronauts": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "medical_inventory": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "recovery_timelines": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "health_alerts": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "incidents": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "inventory_dispensations": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "telemetry_history": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "audit_logs": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "cloud_sync_ledger": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      },
+      "cloud_sync_conflicts": {
+        "exists": true,
+        "status_code": 200,
+        "current_cloud_rows": "0",
+        "in_openapi": true
+      }
+    },
+    "missing_tables": [],
+    "all_tables_present": true
+  },
+  "rpc_inspection": {
+    "reconcile_inventory_transaction": {
+      "exists": true,
+      "status_code": 200,
+      "detail": "RPC function registered in PostgREST OpenAPI schema",
+      "in_openapi": true
+    }
+  },
+  "local_data_readiness": {
+    "sqlite_wal": true,
+    "local_operational_records": 303,
+    "local_outbox_events": 1,
+    "counts_by_table": {
+      "astronauts": 4,
+      "medical_inventory": 18,
+      "recovery_timelines": 2,
+      "health_alerts": 4,
+      "incidents": 44,
+      "inventory_dispensations": 24,
+      "telemetry_history": 109,
+      "audit_logs": 98,
+      "cloud_sync_ledger": 0,
+      "cloud_sync_conflicts": 1
+    }
+  },
+  "migration_readiness": {
+    "status": "SCHEMA_VERIFIED",
+    "description": "All tables and stored procedures exist in Supabase. System is ready for live backfill."
+  },
+  "verdict": "READY"
+}

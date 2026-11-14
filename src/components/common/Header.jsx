@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, Radio, Layers, RotateCcw, AlertCircle } from 'lucide-react';
+import { Sun, Moon, Radio, Layers, RotateCcw, AlertCircle, Shield, User, Cloud } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { useMission } from '../../context/MissionContext';
 
@@ -7,7 +7,9 @@ export const Header = () => {
   const { isDark, toggleTheme, isMinimalView, toggleMinimalView } = useTheme();
   const { 
     met, dsnLatencySeconds, crewReadiness, triggerDrill, 
-    resetAllSimulations, activeDrill, isRedistributed 
+    resetAllSimulations, activeDrill, isRedistributed,
+    currentUser, switchRole, isBackendOnline, isSimulatedData,
+    syncStatus, setActiveTab
   } = useMission();
 
   const formatDelay = (seconds) => {
@@ -22,7 +24,7 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           
           {/* Brand & Mission Status */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             <div>
               <div className="flex items-center space-x-2">
                 <span className="w-2 h-2 rounded-full bg-neutral-900 dark:bg-white inline-block"></span>
@@ -30,19 +32,22 @@ export const Header = () => {
                   ASTRA SENSE
                 </span>
                 <span className="text-xs text-gray-400 dark:text-gray-500 font-normal">
-                  / NASA Space Apps
+                  / ORBITAL GUARD
+                </span>
+                <span className="px-1.5 py-0.5 text-[10px] uppercase font-mono font-bold tracking-wider rounded bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-300 dark:border-amber-800/50">
+                  SIMULATED DATA
                 </span>
               </div>
-              <p className="text-xs text-gray-400 dark:text-gray-500 hidden sm:block">
-                Long-Duration Crew Health Monitoring
+              <p className="text-[11px] text-gray-400 dark:text-gray-500 hidden sm:block">
+                Autonomous Offline Astronaut Health & Mission Continuity
               </p>
             </div>
           </div>
 
           {/* Central Calm Telemetry */}
-          <div className="hidden md:flex items-center space-x-6 text-xs text-gray-500 dark:text-gray-400">
+          <div className="hidden md:flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
             <div className="flex items-center space-x-2">
-              <span className="text-gray-400">Mission Elapsed:</span>
+              <span className="text-gray-400">MET:</span>
               <span className="font-medium text-gray-800 dark:text-gray-200 tabular-nums">
                 Day {met.days} • {String(met.hours).padStart(2, '0')}:{String(met.mins).padStart(2, '0')}:{String(met.secs).padStart(2, '0')}
               </span>
@@ -52,16 +57,60 @@ export const Header = () => {
 
             <div className="flex items-center space-x-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              <span>DSN Delay: {formatDelay(dsnLatencySeconds)}</span>
-              <span className="text-[11px] text-gray-400">(Offline AI Active)</span>
+              <span>DSN: {formatDelay(dsnLatencySeconds)}</span>
             </div>
+
+            <div className="h-3 w-px bg-gray-200 dark:bg-[#2e3036]"></div>
+
+            {/* Backend Connection Status */}
+            <div className="flex items-center space-x-1.5">
+              <span className={`w-2 h-2 rounded-full ${isBackendOnline ? 'bg-emerald-500 animate-pulse' : 'bg-blue-500'}`}></span>
+              <span className="text-[11px] font-medium text-gray-700 dark:text-gray-300">
+                {isBackendOnline ? 'Local Core' : 'Fallback'}
+              </span>
+            </div>
+
+            <div className="h-3 w-px bg-gray-200 dark:bg-[#2e3036]"></div>
+
+            {/* Cloud Sync Status Pill */}
+            <button
+              onClick={() => setActiveTab('cloud-sync')}
+              className="flex items-center space-x-1.5 px-2 py-0.5 rounded text-[11px] font-medium transition-colors hover:bg-gray-100 dark:hover:bg-[#202126]"
+              title="Click to open Cloud Synchronization Center"
+            >
+              <span className={`w-2 h-2 rounded-full ${
+                syncStatus?.cloud_connected 
+                  ? 'bg-emerald-500' 
+                  : (syncStatus?.unresolved_conflicts > 0 ? 'bg-rose-500 animate-pulse' : 'bg-slate-400')
+              }`}></span>
+              <span className="text-gray-700 dark:text-gray-300">
+                {syncStatus?.cloud_connected
+                  ? (syncStatus.pending_count > 0 ? `Cloud (${syncStatus.pending_count})` : 'Cloud: Synced')
+                  : (syncStatus?.unresolved_conflicts > 0 ? `Cloud: Conflict (${syncStatus.unresolved_conflicts})` : 'Cloud: Local')}
+              </span>
+            </button>
           </div>
 
           {/* Right Controls */}
           <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Role Switcher */}
+            <div className="flex items-center space-x-1 bg-gray-50 dark:bg-[#1e2025] px-2 py-1 rounded-md border border-gray-100 dark:border-[#2a2c33]">
+              <Shield className="w-3 h-3 text-gray-400 mr-0.5" />
+              <span className="text-[10px] text-gray-400 uppercase hidden sm:inline">Role:</span>
+              <select
+                value={currentUser?.role || 'tester'}
+                onChange={(e) => switchRole(e.target.value)}
+                className="bg-transparent text-xs font-medium text-gray-700 dark:text-gray-200 focus:outline-none cursor-pointer"
+              >
+                <option value="student" className="dark:bg-[#1a1b1f]">Student / Cadet</option>
+                <option value="tester" className="dark:bg-[#1a1b1f]">Tester / Systems</option>
+                <option value="faculty" className="dark:bg-[#1a1b1f]">Faculty / Surgeon</option>
+              </select>
+            </div>
+
             {/* Simulation controls */}
             <div className="hidden lg:flex items-center space-x-1.5 bg-gray-50 dark:bg-[#1e2025] px-2 py-1 rounded-md border border-gray-100 dark:border-[#2a2c33]">
-              <span className="text-[11px] text-gray-400 px-1">Simulate:</span>
+              <span className="text-[11px] text-gray-400 px-1">Drill:</span>
               <button
                 onClick={() => triggerDrill('SCENARIO-01')}
                 className={`px-2 py-0.5 text-xs rounded transition-colors ${
@@ -103,7 +152,7 @@ export const Header = () => {
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{isMinimalView ? 'Minimal View' : 'Detailed View'}</span>
+              <span className="hidden sm:inline">{isMinimalView ? 'Minimal' : 'Detailed'}</span>
             </button>
 
             {/* Day / Night Mode Toggle */}

@@ -14,6 +14,7 @@ import { MedVault } from './components/modules/MedVault';
 import { MissionMedic } from './components/modules/MissionMedic';
 import { MissionContinuity } from './components/modules/MissionContinuity';
 import { HardwareSimulator } from './components/modules/HardwareSimulator';
+import { CloudSyncCenter } from './components/modules/CloudSyncCenter';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -80,6 +81,8 @@ const MainAppContent = () => {
         return <MissionContinuity />;
       case 'hardware-sim':
         return <HardwareSimulator />;
+      case 'cloud-sync':
+        return <CloudSyncCenter />;
       default:
         return <LandingOverview />;
     }
@@ -97,15 +100,18 @@ const MainAppContent = () => {
         </ErrorBoundary>
       </main>
 
-      <footer className="w-full border-t border-gray-100 dark:border-[#22242a] bg-white dark:bg-[#15161a] py-5 text-xs text-gray-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      {/* Footer */}
+      <footer className="border-t border-gray-100 dark:border-[#222] py-6 text-center text-xs text-gray-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-2">
           <div>
-            <span className="font-medium text-gray-700 dark:text-gray-300">NASA Space Apps Challenge</span>
-            <span className="mx-2">•</span>
-            <span>AI Health Monitoring for Long-Duration Space Missions</span>
+            ORBITAL GUARD • Autonomous Spaceflight Crew Health & Mission Continuity
           </div>
-          <div className="text-[11px] text-gray-400">
-            Offline Edge Engine (Isolation Forest) • Not for clinical use
+          <div className="flex items-center space-x-4 text-[11px] text-gray-400">
+            <span>SQLite WAL (Flight Core)</span>
+            <span>•</span>
+            <span>Supabase (Ground Target)</span>
+            <span>•</span>
+            <span>Phase 2 Verified</span>
           </div>
         </div>
       </footer>

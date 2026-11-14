@@ -2,7 +2,13 @@ import React from 'react';
 import { useMission } from '../../context/MissionContext';
 
 export const Navigation = () => {
-  const { activeTab, setActiveTab, crewReadiness, incidents } = useMission();
+  const { activeTab, setActiveTab, crewReadiness, syncStatus } = useMission();
+
+  const getSyncBadge = () => {
+    if (syncStatus?.unresolved_conflicts > 0) return 'Conflict';
+    if (syncStatus?.pending_count > 0) return `${syncStatus.pending_count}`;
+    return null;
+  };
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard' },
@@ -13,7 +19,8 @@ export const Navigation = () => {
     { id: 'med-vault', label: 'Med Vault' },
     { id: 'mission-incidents', label: 'Incidents' },
     { id: 'recovery-tracker', label: 'Recovery' },
-    { id: 'hardware-sim', label: 'Hardware Spec' }
+    { id: 'hardware-sim', label: 'Telemetry Simulator' },
+    { id: 'cloud-sync', label: 'Cloud Sync', badge: getSyncBadge() }
   ];
 
   return (
@@ -34,7 +41,13 @@ export const Navigation = () => {
               >
                 <span>{item.label}</span>
                 {item.badge && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span>
+                  <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono inline-block ${
+                    item.badge === 'Conflict' 
+                      ? 'bg-rose-500 text-white' 
+                      : (item.badge === 'Alert' ? 'bg-amber-500 text-white' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300')
+                  }`}>
+                    {item.badge}
+                  </span>
                 )}
               </button>
             );

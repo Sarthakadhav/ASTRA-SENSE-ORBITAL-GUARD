@@ -1,14 +1,16 @@
 import json
 import time
-from typing import List, Dict, Any
-from fastapi import APIRouter, HTTPException, status
+from typing import List, Dict, Any, Optional
+from fastapi import APIRouter, HTTPException, status, Header
 from app.database.connection import get_db
 from app.schemas.crew_schema import (
     AstronautProfile, CrewReadinessResponse,
     WorkloadRedistributionRequest, WorkloadRedistributionResponse
 )
 from app.intelligence.crew_readiness import calculate_crew_readiness_metrics
+from app.services.sync_service import enqueue_sync_event
 from app.core.logging import logger
+from app.core.auth import validate_session
 
 router = APIRouter()
 
@@ -51,13 +53,25 @@ def get_astronaut(astronaut_id: str):
         return _format_astronaut_row(row)
 
 @router.post("/crew/redistribute", response_model=WorkloadRedistributionResponse, summary="Execute dynamic workload redistribution")
-def redistribute_workload(req: WorkloadRedistributionRequest):
+def redistribute_workload(
+    req: WorkloadRedistributionRequest,
+    authorization: Optional[str] = Header(None)
+):
     """
     Executes Module 3 Workload Redistribution:
     Delegates clinical responsibilities from fatigued Astronaut A (Dr. Vance)
     to qualified backup Cmdr. Sarah Chen (Level 2 Flight Medicine).
     Elevates Crew Readiness Index from 68/100 to 82/100.
     """
+    if isinstance(authorization, str) and authorization.startswith("Bearer "):
+        token = authorization.split(" ")[1]
+        session = validate_session(token)
+        if session and session.get("role") == "student":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Forbidden: Student role is not authorized to execute workload redistribution."
+            )
+
     with get_db() as conn:
         cursor = conn.cursor()
 
@@ -78,7 +92,6 @@ def redistribute_workload(req: WorkloadRedistributionRequest):
         chen_row = cursor.fetchone()
         if chen_row:
             chen_resp = json.loads(chen_row["responsibilities"])
-            # check if not already added
             if not any(r.get("id") == "RESP-01-TRANSFER" for r in chen_resp):
                 chen_resp.append({
                     "id": "RESP-01-TRANSFER",
@@ -123,6 +136,43 @@ def redistribute_workload(req: WorkloadRedistributionRequest):
         cursor.execute("SELECT * FROM astronauts WHERE id = ?;", (req.backup_astronaut_id,))
         backup_ast = _format_astronaut_row(cursor.fetchone())
 
+        # Enqueue cloud synchronization events
+        enqueue_sync_event(
+            cursor=cursor,
+            entity_type="astronauts",
+            record_id=req.primary_astronaut_id,
+            operation="UPDATE",
+            payload={
+                "id": req.primary_astronaut_id,
+                "condition": "Resting / Relieved",
+                "conditionSeverity": "nominal",
+                "isReassigned": True,
+                "readinessScore": 78
+            }
+        )
+        enqueue_sync_event(
+            cursor=cursor,
+            entity_type="incidents",
+            record_id=incident_id,
+            operation="INSERT",
+            payload={
+                "id": incident_id,
+                "timestamp": "MET 142d 04:38:00",
+                "severity": "NOMINAL",
+                "type": "Crew Workload Redistribution Executed",
+                "targetAstronautId": req.primary_astronaut_id,
+                "targetAstronautName": "Dr. Elena Vance",
+                "summary": "Clinical responsibilities safely delegated to Cmdr. Sarah Chen.",
+                "resolutionStatus": "Active - Monitoring Rest",
+                "syncStatus": "Queued for Earth DSN Sync",
+                "assignedOfficer": req.approved_by,
+                "actionsTaken": [
+                    "Astronaut A transferred to acoustic-damped sleep pod.",
+                    "Emergency trauma standby assigned to Cmdr. Chen."
+                ]
+            }
+        )
+
         conn.commit()
 
     readiness = calculate_crew_readiness_metrics(is_redistributed=True)
@@ -133,25 +183,36 @@ def redistribute_workload(req: WorkloadRedistributionRequest):
         primary_astronaut=primary_ast,
         backup_astronaut=backup_ast,
         incident_id=incident_id,
-        message="Workload safely rebalanced. Crew readiness elevated to 82/100."
+        message="Non-urgent clinical duties transferred to Cmdr. Chen. Protected rest cycle engaged."
     )
 
-@router.post("/crew/reset", summary="Reset simulation baseline")
+@router.post("/crew/reset-simulation", summary="Reset crew simulation state back to nominal baseline")
 def reset_crew_simulation():
-    from app.database.init_db import INITIAL_CREW
+    """Resets Vance to nominal baseline and removes reassigned duties from Chen."""
     with get_db() as conn:
         cursor = conn.cursor()
-        for ast in INITIAL_CREW:
+        cursor.execute("""
+        UPDATE astronauts
+        SET condition = 'Tired (Needs Rest)',
+            conditionSeverity = 'warning',
+            isReassigned = 0,
+            readinessScore = 52,
+            recommendation = 'Dr. Vance is showing signs of high fatigue. To keep the crew safe and ready, consider letting Commander Chen cover non-urgent tasks so Dr. Vance can rest.',
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = 'AST-01';
+        """)
+
+        cursor.execute("SELECT responsibilities FROM astronauts WHERE id = 'AST-02';")
+        chen_row = cursor.fetchone()
+        if chen_row:
+            resp = json.loads(chen_row["responsibilities"])
+            resp = [r for r in resp if r.get("id") != "RESP-01-TRANSFER"]
             cursor.execute("""
             UPDATE astronauts
-            SET condition = ?, conditionSeverity = ?, isReassigned = 0,
-                readinessScore = ?, vitals = ?, mlModel = ?, responsibilities = ?,
-                recommendation = ?
-            WHERE id = ?;
-            """, (
-                ast["condition"], ast["conditionSeverity"], ast["readinessScore"],
-                ast["vitals"], ast["mlModel"], ast["responsibilities"],
-                ast["recommendation"], ast["id"]
-            ))
+            SET responsibilities = ?, updated_at = CURRENT_TIMESTAMP
+            WHERE id = 'AST-02';
+            """, (json.dumps(resp),))
+
         conn.commit()
-    return {"status": "RESET_COMPLETE", "readinessScore": 68}
+
+    return {"status": "RESET", "message": "Crew state reset to initial pre-drill baseline."}

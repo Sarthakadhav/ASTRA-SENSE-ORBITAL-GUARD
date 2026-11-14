@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-11-14T14:30:07.491553",
+  "total_operational_source": 303,
+  "total_operational_cloud": 303,
+  "all_tables_matched": true,
+  "source_counts": {
+    "astronauts": 4,
+    "medical_inventory": 18,
+    "recovery_timelines": 2,
+    "health_alerts": 4,
+    "incidents": 44,
+    "inventory_dispensations": 24,
+    "telemetry_history": 109,
+    "audit_logs": 98
+  },
+  "cloud_counts": {
+    "astronauts": 4,
+    "medical_inventory": 18,
+    "recovery_timelines": 2,
+    "health_alerts": 4,
+    "incidents": 44,
+    "inventory_dispensations": 24,
+    "telemetry_history": 109,
+    "audit_logs": 98,
+    "cloud_sync_ledger": 0,
+    "cloud_sync_conflicts": 0
+  },
+  "outbox_states": {
+    "PENDING": 48,
+    "RETRY": 1,
+    "SYNCED": 247
+  },
+  "sqlite_health": {
+    "integrity": "ok",
+    "fk_violations": 0,
+    "journal_mode": "wal"
+  }
+}

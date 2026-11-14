@@ -8,3 +8,12 @@ __pycache__
 *.db-wal
 *.db-shm
 .env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+*.pem
+*.key
+dist/
+backend/backups/

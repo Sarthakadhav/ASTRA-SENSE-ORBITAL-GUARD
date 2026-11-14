@@ -495,6 +495,63 @@ def init_database():
         );
         """)
 
+        # Inventory Dispensations Ledger Table
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS inventory_dispensations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            item_id TEXT NOT NULL,
+            item_name TEXT NOT NULL,
+            quantity INTEGER NOT NULL,
+            patient_astronaut_id TEXT,
+            reason TEXT NOT NULL,
+            authorized_by TEXT NOT NULL,
+            timestamp_met TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+
+        # Performance Indexes for high-frequency telemetry & queries
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_telemetry_history_ast ON telemetry_history (astronaut_id, created_at);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_health_alerts_ast ON health_alerts (astronaut_id, status);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_incidents_status ON incidents (syncStatus);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_dispensations_item ON inventory_dispensations (item_id);")
+
+        # Cloud Synchronization Outbox Table (Local queue for Supabase replication)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS cloud_sync_outbox (
+            id TEXT PRIMARY KEY,
+            entity_type TEXT NOT NULL,
+            record_id TEXT NOT NULL,
+            operation TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            status TEXT DEFAULT 'PENDING',
+            attempt_count INTEGER DEFAULT 0,
+            last_attempt_at TIMESTAMP,
+            next_retry_at TIMESTAMP,
+            error_info TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_sync_outbox_status ON cloud_sync_outbox (status, next_retry_at);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_sync_outbox_entity ON cloud_sync_outbox (entity_type, record_id);")
+
+        # Cloud Synchronization Conflicts Table (Unresolved conflicts tracking)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS cloud_sync_conflicts (
+            id TEXT PRIMARY KEY,
+            entity_type TEXT NOT NULL,
+            record_id TEXT NOT NULL,
+            local_payload_json TEXT NOT NULL,
+            cloud_payload_json TEXT,
+            conflict_reason TEXT NOT NULL,
+            resolution_status TEXT DEFAULT 'UNRESOLVED',
+            resolved_by TEXT,
+            resolved_at TIMESTAMP,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_sync_conflicts_status ON cloud_sync_conflicts (resolution_status);")
+
         # Seed initial crew if empty
         cursor.execute("SELECT COUNT(*) FROM astronauts;")
         if cursor.fetchone()[0] == 0:

@@ -65,7 +65,7 @@ def trigger_emergency_drill(req: DrillRequest):
             # Insert critical alert
             cursor.execute("""
             INSERT OR REPLACE INTO health_alerts (id, astronaut_id, severity, type, message, status, created_at_met)
-            VALUES (?, 'ALL_CREW', 'CRITICAL', 'Cabin Depressurization Emergency', 'Micro-meteoroid cabin breach detected. Engage 100% O2 mask (SOP-HYPOXIA-02).', 'NEW', '142:05:10:00');
+            VALUES (?, 'AST-02', 'CRITICAL', 'Cabin Depressurization Emergency', 'Micro-meteoroid cabin breach detected. Engage 100% O2 mask (SOP-HYPOXIA-02).', 'NEW', '142:05:10:00');
             """, (f"ALT-DRILL-{req.scenario_id}",))
 
         elif req.scenario_id == "SCENARIO-03":

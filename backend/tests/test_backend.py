@@ -149,3 +149,103 @@ async def test_system_status():
         data = res.json()
         assert data["status"] == "OPERATIONAL"
         assert data["offline_capabilities"]["is_earth_independent"] is True
+
+@pytest.mark.anyio
+async def test_simulation_scenarios_and_step():
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+        # Get scenarios
+        scen_res = await client.get("/api/v1/telemetry/simulator/scenarios")
+        assert scen_res.status_code == 200
+        scenarios = scen_res.json()
+        assert len(scenarios) >= 5
+
+        # Execute simulation step for Mode A
+        step_res = await client.post("/api/v1/telemetry/simulator/step", json={
+            "astronaut_id": "AST-02",
+            "scenario_mode": "NORMAL",
+            "tick": 2
+        })
+        assert step_res.status_code == 200
+        s_data = step_res.json()
+        assert s_data["data_label"] == "SIMULATED TELEMETRY"
+        assert s_data["ingest_result"]["status"] == "ACCEPTED"
+
+        # Execute simulation step for Mode C (Hypoxia)
+        hypo_res = await client.post("/api/v1/telemetry/simulator/step", json={
+            "astronaut_id": "AST-01",
+            "scenario_mode": "HYPOXIA",
+            "tick": 20
+        })
+        assert hypo_res.status_code == 200
+        h_data = hypo_res.json()
+        assert h_data["packet"]["sensor_stream"]["spo2_pct"] < 90.0
+
+@pytest.mark.anyio
+async def test_inventory_replenish_and_dispensations():
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+        rep_res = await client.post("/api/v1/inventory/replenish", json={
+            "item_id": "MED-01",
+            "quantity": 5,
+            "authorized_by": "Cmdr. Sarah Chen",
+            "notes": "Testing cargo restock"
+        })
+        assert rep_res.status_code == 200
+        assert rep_res.json()["added_quantity"] == 5
+
+        disp_res = await client.get("/api/v1/inventory/dispensations")
+        assert disp_res.status_code == 200
+        assert isinstance(disp_res.json(), list)
+
+@pytest.mark.anyio
+async def test_incident_create_and_resolve():
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+        inc_res = await client.post("/api/v1/incidents", json={
+            "severity": "WARNING",
+            "type": "Treadmill Vibration Resonance",
+            "targetAstronautId": "AST-02",
+            "targetAstronautName": "Cmdr. Sarah Chen",
+            "summary": "T2 treadmill vibration isolator showed minor resonance harmonic.",
+            "assignedOfficer": "Lt. Marcus Reyes",
+            "actionsTaken": ["Recalibrated magnetic dampers"]
+        })
+        assert inc_res.status_code == 200
+        inc_id = inc_res.json()["incident_id"]
+
+        resolve_res = await client.patch(f"/api/v1/incidents/{inc_id}/resolve", json={
+            "resolution_notes": "Harmonic dampening test passed within NASA-STD-3001 margins.",
+            "resolved_by": "Lt. Marcus Reyes"
+        })
+        assert resolve_res.status_code == 200
+        assert resolve_res.json()["status"] == "RESOLVED"
+
+@pytest.mark.anyio
+async def test_dsn_queue_status():
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+        res = await client.get("/api/v1/dsn/queue")
+        assert res.status_code == 200
+        data = res.json()
+        assert data["status"] == "QUEUE_READY"
+        assert "pending_incidents_count" in data
+
+@pytest.mark.anyio
+async def test_role_auth_student_and_faculty():
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+        # Student login
+        res_stud = await client.post("/api/v1/auth/login", json={
+            "username": "student",
+            "password": "Student2026!"
+        })
+        assert res_stud.status_code == 200
+        s_data = res_stud.json()
+        assert s_data["role"] == "student"
+        assert s_data["permissions"]["can_redistribute_workload"] is False
+
+        # Faculty login
+        res_fac = await client.post("/api/v1/auth/login", json={
+            "username": "faculty",
+            "password": "Faculty2026!"
+        })
+        assert res_fac.status_code == 200
+        f_data = res_fac.json()
+        assert f_data["role"] == "faculty"
+        assert f_data["permissions"]["can_redistribute_workload"] is True

@@ -1,0 +1,10 @@
+{
+  "sqlite_write_mean_ms": 0.309,
+  "sqlite_write_p95_ms": 0.959,
+  "outbox_enqueue_mean_ms": 0.405,
+  "outbox_enqueue_p95_ms": 0.717,
+  "safety_rule_mean_ms": 0.0055,
+  "safety_rule_p99_ms": 0.0773,
+  "isolation_forest_mean_ms": 22.264,
+  "isolation_forest_p95_ms": 28.397
+}

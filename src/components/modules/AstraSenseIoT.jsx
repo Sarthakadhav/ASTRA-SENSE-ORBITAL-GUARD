@@ -1,15 +1,38 @@
 import React from 'react';
 import { useMission } from '../../context/MissionContext';
 import { EcgWaveform } from '../common/EcgWaveform';
+import { Sliders, Activity, Database } from 'lucide-react';
 
 export const AstraSenseIoT = () => {
   const { 
     crew, selectedAstronaut, setSelectedAstronautId, 
-    isEspStreaming, setIsEspStreaming, sensorNoiseLevel, setSensorNoiseLevel 
+    isEspStreaming, setIsEspStreaming, sensorNoiseLevel, setSensorNoiseLevel,
+    simulationMode, simulationRunning, setSimulationRunning, setActiveTab,
+    isBackendOnline
   } = useMission();
 
   return (
     <div className="space-y-6">
+      {/* SIMULATED DATA Indicator Banner */}
+      <div className="p-3.5 rounded-2xl bg-amber-50/70 dark:bg-amber-950/25 border border-amber-200/80 dark:border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center space-x-2.5">
+          <span className="px-2 py-0.5 rounded bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-100 font-bold uppercase tracking-wider text-[10px]">
+            Simulated Data
+          </span>
+          <span className="text-amber-900/90 dark:text-amber-200">
+            Real-time software bio-telemetry stream. All packets are validated and logged to SQLite table <code className="font-mono text-[11px]">telemetry_history</code>.
+          </span>
+        </div>
+
+        <button
+          onClick={() => setActiveTab('hardware-sim')}
+          className="self-start sm:self-auto px-3 py-1 rounded-lg bg-white dark:bg-[#1a1b1f] border border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200 font-medium hover:bg-amber-100/50 transition-colors flex items-center space-x-1"
+        >
+          <Sliders className="w-3 h-3" />
+          <span>Configure Simulator Modes</span>
+        </button>
+      </div>
+
       {/* Header bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-100 dark:border-[#24252a] gap-3">
         <div>
@@ -27,14 +50,20 @@ export const AstraSenseIoT = () => {
         {/* Hardware Stream Controls */}
         <div className="flex items-center space-x-2 text-xs">
           <button
-            onClick={() => setIsEspStreaming(!isEspStreaming)}
+            onClick={() => {
+              if (simulationRunning) {
+                setSimulationRunning(false);
+              } else {
+                setSimulationRunning(true);
+              }
+            }}
             className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-              isEspStreaming
+              simulationRunning
                 ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
                 : 'bg-gray-100 text-gray-600 dark:bg-neutral-800 dark:text-gray-300'
             }`}
           >
-            {isEspStreaming ? 'Streaming Active' : 'Stream Paused'}
+            {simulationRunning ? 'Simulator Active' : 'Simulator Paused'}
           </button>
 
           <select

@@ -1,0 +1,329 @@
+{
+  "timestamp": "2026-11-13T21:48:19.346752",
+  "task_a_backend_connection": {
+    "config": {
+      "supabase_url_configured": true,
+      "supabase_domain": "kgjbltqunjpscyipwgll.supabase.co",
+      "secret_key_detected": true,
+      "secret_key_format": "MODERN_OPAQUE (sb_secret_...)",
+      "publishable_key_detected": true,
+      "header_apikey_present": true,
+      "header_authorization_omitted_for_opaque": true
+    },
+    "health_check": {
+      "connected": true,
+      "configured": true,
+      "status": "ONLINE",
+      "status_code": 200,
+      "message": "Supabase cloud database connected"
+    },
+    "table_accessibility": {
+      "astronauts": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "medical_inventory": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "recovery_timelines": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "health_alerts": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "incidents": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "inventory_dispensations": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "telemetry_history": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "audit_logs": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "cloud_sync_ledger": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      },
+      "cloud_sync_conflicts": {
+        "status_code": 200,
+        "accessible": true,
+        "cloud_row_count": "0"
+      }
+    },
+    "all_tables_accessible": true
+  },
+  "task_b_security_tests": {
+    "anon_read_tests": {
+      "astronauts": {
+        "status_code": 200,
+        "rows_returned": 0,
+        "access_denied": true
+      },
+      "medical_inventory": {
+        "status_code": 200,
+        "rows_returned": 0,
+        "access_denied": true
+      },
+      "incidents": {
+        "status_code": 200,
+        "rows_returned": 0,
+        "access_denied": true
+      },
+      "telemetry_history": {
+        "status_code": 200,
+        "rows_returned": 0,
+        "access_denied": true
+      }
+    },
+    "anon_write_tests": {
+      "astronauts": {
+        "status_code": 401,
+        "blocked": true,
+        "response": "{\"code\":\"42501\",\"details\":null,\"hint\":null,\"message\":\"new row violates row-level security policy for table \\\"astronauts\\"
+      }
+    },
+    "authenticated_read_tests": {
+      "astronauts": {
+        "status_code": 401,
+        "blocked": true
+      }
+    },
+    "authenticated_write_tests": {
+      "astronauts": {
+        "status_code": 401,
+        "blocked": true
+      }
+    },
+    "service_role_read_tests": {
+      "astronauts": {
+        "status_code": 200,
+        "permitted": true
+      }
+    },
+    "rpc_permission_tests": {
+      "anon_invoke": {
+        "status_code": 404,
+        "denied": true,
+        "detail": "{\"code\":\"PGRST202\",\"details\":\"Searched for the function public.reconcile_inventory_transaction without parameters or wit"
+      },
+      "service_role_registered": {
+        "registered": true,
+        "status": "AUTHORIZED"
+      }
+    }
+  },
+  "task_c_category_c_tests": {
+    "connectivity": {
+      "status": "ONLINE",
+      "connected": true,
+      "passed": true
+    },
+    "secret_redaction": {
+      "passed": true,
+      "detail": "Secret tokens successfully scrubbed from error logs"
+    },
+    "isolated_crud": {
+      "upsert_passed": true,
+      "cleanup_passed": true,
+      "zero_residue": true
+    },
+    "cloud_purity_check": {
+      "astronauts_count": 0,
+      "pure": true
+    }
+  },
+  "task_d_backfill_preflight": {
+    "sqlite_health": {
+      "integrity_check": "ok",
+      "foreign_key_violations": 0,
+      "journal_mode": "wal",
+      "healthy": true
+    },
+    "source_counts": {
+      "operational_tables": {
+        "astronauts": 4,
+        "medical_inventory": 18,
+        "recovery_timelines": 2,
+        "health_alerts": 4,
+        "incidents": 44,
+        "inventory_dispensations": 24,
+        "telemetry_history": 109,
+        "audit_logs": 98
+      },
+      "total_operational_records": 303,
+      "infrastructure": {
+        "cloud_sync_outbox_total": 296,
+        "cloud_sync_outbox_by_status": {
+          "PENDING": 190,
+          "RETRY": 1,
+          "SYNCED": 105
+        },
+        "cloud_sync_conflicts_total": 1,
+        "cloud_sync_conflicts_by_status": {
+          "RESOLVED_LOCAL": 1
+        }
+      }
+    },
+    "backups": {
+      "backup_count": 11,
+      "files": [
+        {
+          "name": "orbital_guard_phase_2_5_20261113_143338.db",
+          "size_bytes": 389120,
+          "modified": "2026-11-13T10:52:07.649875"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261110_192919.db",
+          "size_bytes": 147456,
+          "modified": "2026-11-10T19:19:37.605020"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261110_195817.db",
+          "size_bytes": 262144,
+          "modified": "2026-11-10T19:57:44.724069"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261110_234703.db",
+          "size_bytes": 278528,
+          "modified": "2026-11-10T23:45:42.531202"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261110_234827.db",
+          "size_bytes": 282624,
+          "modified": "2026-11-10T23:47:05.058816"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261110_234934.db",
+          "size_bytes": 327680,
+          "modified": "2026-11-10T23:49:34.526686"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261113_103406.db",
+          "size_bytes": 335872,
+          "modified": "2026-11-10T23:51:18.714372"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261113_103611.db",
+          "size_bytes": 339968,
+          "modified": "2026-11-13T10:35:05.207794"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261113_103645.db",
+          "size_bytes": 352256,
+          "modified": "2026-11-13T10:36:45.522525"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261113_104028.db",
+          "size_bytes": 385024,
+          "modified": "2026-11-13T10:37:14.560486"
+        },
+        {
+          "name": "orbital_guard_pre_migration_20261113_105207.db",
+          "size_bytes": 389120,
+          "modified": "2026-11-13T10:40:29.590875"
+        }
+      ],
+      "verified_backup_present": true
+    },
+    "cloud_counts": {
+      "astronauts": 0,
+      "medical_inventory": 0,
+      "recovery_timelines": 0,
+      "health_alerts": 0,
+      "incidents": 0,
+      "inventory_dispensations": 0,
+      "telemetry_history": 0,
+      "audit_logs": 0,
+      "cloud_sync_ledger": 0,
+      "cloud_sync_conflicts": 0
+    },
+    "total_cloud_rows": 0,
+    "ordering_plan": [
+      {
+        "tier": 1,
+        "table": "astronauts",
+        "records": 4,
+        "depends_on": []
+      },
+      {
+        "tier": 1,
+        "table": "medical_inventory",
+        "records": 18,
+        "depends_on": []
+      },
+      {
+        "tier": 2,
+        "table": "recovery_timelines",
+        "records": 2,
+        "depends_on": [
+          "astronauts"
+        ]
+      },
+      {
+        "tier": 2,
+        "table": "health_alerts",
+        "records": 4,
+        "depends_on": [
+          "astronauts"
+        ]
+      },
+      {
+        "tier": 2,
+        "table": "incidents",
+        "records": 44,
+        "depends_on": [
+          "astronauts"
+        ]
+      },
+      {
+        "tier": 3,
+        "table": "inventory_dispensations",
+        "records": 24,
+        "depends_on": [
+          "medical_inventory",
+          "astronauts"
+        ]
+      },
+      {
+        "tier": 4,
+        "table": "telemetry_history",
+        "records": 109,
+        "depends_on": [
+          "astronauts"
+        ]
+      },
+      {
+        "tier": 4,
+        "table": "audit_logs",
+        "records": 98,
+        "depends_on": []
+      }
+    ],
+    "dry_run_report": {
+      "mode": "PREVIEW",
+      "total_source_records": 303,
+      "validation_errors": 0,
+      "success": true
+    }
+  },
+  "verdict": "GO FOR BACKFILL"
+}

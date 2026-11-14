@@ -9,10 +9,14 @@ from app.api.endpoints import (
     incidents,
     dsn,
     system,
+    auth,
+    sync,
 )
 
 api_router = APIRouter()
 
+api_router.include_router(auth.router, tags=["Authentication & Access Control"])
+api_router.include_router(sync.router, tags=["Supabase Cloud Synchronization & Data Security"])
 api_router.include_router(telemetry.router, tags=["Wearable Telemetry & Sensors"])
 api_router.include_router(crew.router, tags=["Crew Matrix & Readiness Intelligence"])
 api_router.include_router(health.router, tags=["Health Analytics & Isolation Forest"])

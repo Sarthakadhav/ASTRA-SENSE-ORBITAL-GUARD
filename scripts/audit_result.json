@@ -1,0 +1,1282 @@
+{
+  "db_file": "D:\\ASTRA-SENSE-ORBITAL-GUARD\\backend\\orbital_guard.db",
+  "journal_mode": "wal",
+  "foreign_keys_enabled": false,
+  "tables": {
+    "astronauts": {
+      "record_count": 4,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "callsign",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "role",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "dutyCategory",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "condition",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "conditionSeverity",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "photo",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "avatar",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 9,
+          "name": "age",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 10,
+          "name": "bloodType",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 11,
+          "name": "missionDay",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 12,
+          "name": "suitId",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 13,
+          "name": "readinessScore",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 14,
+          "name": "readinessBreakdown",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 15,
+          "name": "vitals",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 16,
+          "name": "sensorReliability",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 17,
+          "name": "mlModel",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 18,
+          "name": "responsibilities",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 19,
+          "name": "backupOfficer",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 20,
+          "name": "recommendation",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 21,
+          "name": "assignedBackupId",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 22,
+          "name": "isReassigned",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": "0",
+          "pk": false
+        },
+        {
+          "cid": 23,
+          "name": "timelineNotes",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 24,
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "sqlite_autoindex_astronauts_1",
+          "unique": true
+        }
+      ],
+      "sample_fields": [
+        "id",
+        "name",
+        "callsign",
+        "role",
+        "dutyCategory",
+        "condition",
+        "conditionSeverity",
+        "photo",
+        "avatar",
+        "age",
+        "bloodType",
+        "missionDay",
+        "suitId",
+        "readinessScore",
+        "readinessBreakdown",
+        "vitals",
+        "sensorReliability",
+        "mlModel",
+        "responsibilities",
+        "backupOfficer",
+        "recommendation",
+        "assignedBackupId",
+        "isReassigned",
+        "timelineNotes",
+        "updated_at"
+      ]
+    },
+    "audit_logs": {
+      "record_count": 32,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "user_officer",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "action",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "details",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "timestamp_met",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [],
+      "sample_fields": [
+        "id",
+        "user_officer",
+        "action",
+        "details",
+        "timestamp_met",
+        "created_at"
+      ]
+    },
+    "cloud_sync_conflicts": {
+      "record_count": 0,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "entity_type",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "record_id",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "local_payload_json",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "cloud_payload_json",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "conflict_reason",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "resolution_status",
+          "type": "TEXT",
+          "notnull": false,
+          "default": "'UNRESOLVED'",
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "resolved_by",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "resolved_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 9,
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "idx_sync_conflicts_status",
+          "unique": false
+        },
+        {
+          "name": "sqlite_autoindex_cloud_sync_conflicts_1",
+          "unique": true
+        }
+      ],
+      "sample_fields": []
+    },
+    "cloud_sync_outbox": {
+      "record_count": 0,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "entity_type",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "record_id",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "operation",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "payload_json",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": false,
+          "default": "'PENDING'",
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "attempt_count",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": "0",
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "last_attempt_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "next_retry_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 9,
+          "name": "error_info",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 10,
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "idx_sync_outbox_entity",
+          "unique": false
+        },
+        {
+          "name": "idx_sync_outbox_status",
+          "unique": false
+        },
+        {
+          "name": "sqlite_autoindex_cloud_sync_outbox_1",
+          "unique": true
+        }
+      ],
+      "sample_fields": []
+    },
+    "health_alerts": {
+      "record_count": 4,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "astronaut_id",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "severity",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "type",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "message",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": false,
+          "default": "'NEW'",
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "source",
+          "type": "TEXT",
+          "notnull": false,
+          "default": "'LOCAL_HEALTH_ENGINE'",
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "created_at_met",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "acknowledged_by",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 9,
+          "name": "acknowledged_at_met",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 10,
+          "name": "resolved_by",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 11,
+          "name": "resolved_at_met",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 12,
+          "name": "actions_taken",
+          "type": "TEXT",
+          "notnull": false,
+          "default": "'[]'",
+          "pk": false
+        },
+        {
+          "cid": 13,
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "idx_health_alerts_ast",
+          "unique": false
+        },
+        {
+          "name": "sqlite_autoindex_health_alerts_1",
+          "unique": true
+        }
+      ],
+      "sample_fields": [
+        "id",
+        "astronaut_id",
+        "severity",
+        "type",
+        "message",
+        "status",
+        "source",
+        "created_at_met",
+        "acknowledged_by",
+        "acknowledged_at_met",
+        "resolved_by",
+        "resolved_at_met",
+        "actions_taken",
+        "created_at"
+      ]
+    },
+    "incidents": {
+      "record_count": 18,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "timestamp",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "severity",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "type",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "targetAstronautId",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "targetAstronautName",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "summary",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "resolutionStatus",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "syncStatus",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 9,
+          "name": "assignedOfficer",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 10,
+          "name": "actionsTaken",
+          "type": "TEXT",
+          "notnull": false,
+          "default": "'[]'",
+          "pk": false
+        },
+        {
+          "cid": 11,
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "idx_incidents_status",
+          "unique": false
+        },
+        {
+          "name": "sqlite_autoindex_incidents_1",
+          "unique": true
+        }
+      ],
+      "sample_fields": [
+        "id",
+        "timestamp",
+        "severity",
+        "type",
+        "targetAstronautId",
+        "targetAstronautName",
+        "summary",
+        "resolutionStatus",
+        "syncStatus",
+        "assignedOfficer",
+        "actionsTaken",
+        "created_at"
+      ]
+    },
+    "inventory_dispensations": {
+      "record_count": 8,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "item_id",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "item_name",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "quantity",
+          "type": "INTEGER",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "patient_astronaut_id",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "reason",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "authorized_by",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "timestamp_met",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "idx_dispensations_item",
+          "unique": false
+        }
+      ],
+      "sample_fields": [
+        "id",
+        "item_id",
+        "item_name",
+        "quantity",
+        "patient_astronaut_id",
+        "reason",
+        "authorized_by",
+        "timestamp_met",
+        "created_at"
+      ]
+    },
+    "medical_inventory": {
+      "record_count": 10,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "category",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "indication",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "stock",
+          "type": "INTEGER",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "unit",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "minSafeStock",
+          "type": "INTEGER",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "shelfLifeDays",
+          "type": "INTEGER",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "radiationDegradationRate",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 9,
+          "name": "vitalUrgency",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 10,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 11,
+          "name": "location",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 12,
+          "name": "contraindications",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 13,
+          "name": "batteryChargePercent",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 14,
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "sqlite_autoindex_medical_inventory_1",
+          "unique": true
+        }
+      ],
+      "sample_fields": [
+        "id",
+        "category",
+        "name",
+        "indication",
+        "stock",
+        "unit",
+        "minSafeStock",
+        "shelfLifeDays",
+        "radiationDegradationRate",
+        "vitalUrgency",
+        "status",
+        "location",
+        "contraindications",
+        "batteryChargePercent",
+        "updated_at"
+      ]
+    },
+    "recovery_timelines": {
+      "record_count": 2,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "astronautId",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "protocol",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "currentStep",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "progressPercent",
+          "type": "INTEGER",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "projectedFullRecoveryMET",
+          "type": "TEXT",
+          "notnull": true,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "sleepDebtTarget",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "exercisePermitted",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "circadianLightProfile",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "sqlite_autoindex_recovery_timelines_1",
+          "unique": true
+        }
+      ],
+      "sample_fields": [
+        "astronautId",
+        "name",
+        "protocol",
+        "currentStep",
+        "progressPercent",
+        "projectedFullRecoveryMET",
+        "sleepDebtTarget",
+        "exercisePermitted",
+        "circadianLightProfile"
+      ]
+    },
+    "telemetry_history": {
+      "record_count": 45,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": true
+        },
+        {
+          "cid": 1,
+          "name": "packet_id",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 2,
+          "name": "astronaut_id",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 3,
+          "name": "timestamp_met",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 4,
+          "name": "ecg_lead2_mv",
+          "type": "REAL",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 5,
+          "name": "spo2_pct",
+          "type": "REAL",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 6,
+          "name": "heart_rate_bpm",
+          "type": "REAL",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 7,
+          "name": "skin_temp_c",
+          "type": "REAL",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 8,
+          "name": "imu_accel_g",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 9,
+          "name": "impedance_ohms",
+          "type": "REAL",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 10,
+          "name": "battery_level_pct",
+          "type": "REAL",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 11,
+          "name": "crc32_valid",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 12,
+          "name": "quality_status",
+          "type": "TEXT",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 13,
+          "name": "anomaly_score",
+          "type": "REAL",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 14,
+          "name": "is_anomaly",
+          "type": "INTEGER",
+          "notnull": false,
+          "default": null,
+          "pk": false
+        },
+        {
+          "cid": 15,
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "notnull": false,
+          "default": "CURRENT_TIMESTAMP",
+          "pk": false
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "idx_telemetry_history_ast",
+          "unique": false
+        }
+      ],
+      "sample_fields": [
+        "id",
+        "packet_id",
+        "astronaut_id",
+        "timestamp_met",
+        "ecg_lead2_mv",
+        "spo2_pct",
+        "heart_rate_bpm",
+        "skin_temp_c",
+        "imu_accel_g",
+        "impedance_ohms",
+        "battery_level_pct",
+        "crc32_valid",
+        "quality_status",
+        "anomaly_score",
+        "is_anomaly",
+        "created_at"
+      ]
+    }
+  }
+}
